@@ -33,4 +33,8 @@
     <string name="xml_error">XML Error</string>
     <string name="connection_error">Connection Error</string>
 
+    <string name="detected_copy">We detected some text in your clipboard, would you like to make a new entry with that text?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+
 </resources>

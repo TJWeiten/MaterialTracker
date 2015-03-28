@@ -32,14 +32,17 @@
             android:id="@+id/swipyrefreshlayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:direction="top">
+            app:direction="top" >
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+            <com.dexafree.materialList.view.MaterialListView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                app:column_count="1"
+                android:background="@color/divider"
                 android:cacheColorHint="@android:color/transparent"
-                android:scrollbars="vertical" />
+                android:id="@+id/recycler_view"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp" />
 
         </com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout>
 

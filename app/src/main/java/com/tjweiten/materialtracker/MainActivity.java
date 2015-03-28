@@ -5,7 +5,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.StrictMode;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +15,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
+import com.dexafree.materialList.cards.SmallImageCard;
+import com.dexafree.materialList.view.MaterialListView;
 import com.melnykov.fab.FloatingActionButton;
 import com.mikepenz.iconics.typeface.FontAwesome;
 import com.mikepenz.materialdrawer.Drawer;
@@ -43,7 +44,6 @@ public class MainActivity extends ActionBarActivity implements SwipyRefreshLayou
     private Drawer.Result mDrawer;
     private Toolbar mToolbar;
     private SwipyRefreshLayout mSwipyRefreshLayout;
-    private boolean refreshing = false;
     public DatabaseHandler db = new DatabaseHandler(this);
 
     public static final boolean DEBUG_MODE = true;
@@ -51,9 +51,6 @@ public class MainActivity extends ActionBarActivity implements SwipyRefreshLayou
     public static final String USPS_TRACKING_URL = "http://production.shippingapis.com/ShippingAPI.dll?API=TrackV2&XML=";
 
     protected void onCreate(Bundle savedInstanceState) {
-
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
 
         /* initiate the main activity */
         super.onCreate(savedInstanceState);
@@ -91,8 +88,24 @@ public class MainActivity extends ActionBarActivity implements SwipyRefreshLayou
                 .withSavedInstance(savedInstanceState)
                 .build();
 
-        /* initiate card view */
-        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        /* create the material list view */
+        MaterialListView mRecyclerView = (MaterialListView) findViewById(R.id.recycler_view);
+
+        /* create the cards */
+        List<Package> parcels = db.getAllPackages();
+        for(Package pn : parcels) {
+            int active = pn.getActive();
+            if(active == 1) {
+                SmallImageCard card = new SmallImageCard(this);
+                card.setTitle(pn.getName());
+                card.setDescription(pn.getXML());
+                card.setDrawable(R.drawable.ic_launcher);
+                card.setBackgroundColor(getResources().getColor(R.color.icons));
+                card.setTitleColor(getResources().getColor(R.color.accent));
+                card.setDescriptionColor(getResources().getColor(R.color.primary_text));
+                mRecyclerView.add(card);
+            }
+        }
 
         /* create the FAB */
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -112,7 +125,6 @@ public class MainActivity extends ActionBarActivity implements SwipyRefreshLayou
         /* print to logcat messages about the database if enabled */
         if(DEBUG_MODE) {
             Log.d("DB READ", "Reading all packages in the database...");
-            List<Package> parcels = db.getAllPackages();
             for(Package pn : parcels) {
                 String log = "ID: " + pn.getID() +
                         ", Name: " + pn.getName() +
@@ -174,16 +186,9 @@ public class MainActivity extends ActionBarActivity implements SwipyRefreshLayou
 
         List<Package> parcels = db.getAllPackages();
         for(Package pn : parcels) {
-
-            int courier = pn.getCarrierID();
             int active = pn.getActive();
-
-            if(active == 1) {
-
+            if(active == 1)
                 new LoadXml().execute(pn);
-
-            }
-
         }
 
     }

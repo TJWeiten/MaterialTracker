@@ -42,6 +42,14 @@ public class AddEditTracking extends ActionBarActivity implements AdapterView.On
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
+        /* detect if user has something in the clipboard */
+        //ClipboardManager cm = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+        //if(cm.hasPrimaryClip()){
+        //    EditText ET_parcel_tracking_number = (EditText) findViewById(R.id.parcel_tracking_number);
+        //    ClipData cd = cm.getPrimaryClip();
+        //    ET_parcel_tracking_number.setText(cd.getText());
+        //}
+
     }
 
     /* inflate the menu, adding items to the action bar */
