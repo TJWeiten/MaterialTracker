@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:materialTracker="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/edit_cancel"
+        android:icon="@drawable/ic_close_white_36dp"
+        android:title="@string/cancel"
+        android:text="Cancel"
+        materialTracker:showAsAction="always" />
+    <item android:id="@+id/edit_accept"
+        android:icon="@drawable/ic_check_white_36dp"
+        android:title="@string/accept"
+        android:text="Accept"
+        materialTracker:showAsAction="always" />
+</menu>
