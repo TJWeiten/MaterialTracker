@@ -23,5 +23,15 @@
         </activity>
     </application>
     <uses-permission android:name="android.permission.INTERNET" />
+    <receiver
+        android:name=".receiver.AlarmReceiver"></receiver>
+    <receiver android:name=".BootReceiver"
+        android:enabled="true">
+        <intent-filter>
+            <action android:name="android.intent.action.BOOT_COMPLETED"></action>
+        </intent-filter>
+    </receiver>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+
 
 </manifest>
